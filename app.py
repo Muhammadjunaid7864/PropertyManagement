@@ -14,6 +14,7 @@ Config.ensure_instance_folder()
 
 db.init_app(app)
 login_manager.init_app(app)
+from controllers import property 
 
 @login_manager.user_loader
 def load_user(user_id):
