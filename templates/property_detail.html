@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">{{ property.name }}</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ url_for('app_bp.properties') }}">Property</a></li>
+        <li class="breadcrumb-item active">{{ property.name }}</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Description:</h5>
+            <p>{{ property.description }}</p>
+            <h5>Assigned User:</h5>
+            <p>{{ property.owner.username }}</p>
+            <h5>Images:</h5>
+            <div>
+                {% for image in property.image_paths.split(',') %}
+                    <img src="{{ url_for('static', filename=image.split('static/')[1]) }}" alt="Property Image" width="100">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

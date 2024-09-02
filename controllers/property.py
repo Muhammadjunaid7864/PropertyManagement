@@ -43,14 +43,14 @@ def properties():
 
         # Respond with the newly created property to update the UI
         return jsonify({
-            'status': 'success',
-            'id': new_property.id,
-            'name': new_property.name,
-            'description': new_property.description,
-            'images': image_paths,
-            'message': 'Property added successfully!',
-            'redirect_url': url_for('app_bp.properties')
-        })
+        'status': 'success',
+        'id': new_property.id,
+        'name': new_property.name,
+        'description': new_property.description,
+        'images': image_paths,
+        'message': 'Property added successfully!',
+        'redirect_url': url_for('app_bp.properties')
+    }), 200
 
     # Fetch all users for the dropdown
     users = User.query.all()
@@ -60,3 +60,23 @@ def properties():
 
     return render_template('property.html', properties=properties, users=users)
 
+
+# propert Details
+
+def property_detail(property_id):
+    property = Property.query.get_or_404(property_id)
+    return render_template('property_detail.html', property=property)
+
+# Delete Property
+
+def delete_property():
+    data = request.get_json()
+    property_id = data.get('id')
+    property = Property.query.get(property_id)
+
+    if property:
+        db.session.delete(property)
+        db.session.commit()
+        return jsonify({'status': 'success', 'message': 'Property deleted successfully!','redirect_url': url_for('app_bp.properties')}),200
+    else:
+        return jsonify({'status': 'error', 'message': 'Property not found.'}), 404
