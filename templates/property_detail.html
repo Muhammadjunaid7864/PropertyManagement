@@ -7,18 +7,43 @@
         <li class="breadcrumb-item"><a href="{{ url_for('app_bp.properties') }}">Property</a></li>
         <li class="breadcrumb-item active">{{ property.name }}</li>
     </ol>
+
+    <!-- Bootstrap Carousel -->
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for i in range(property.image_paths.split(',') | length) %}
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{ i }}" class="{% if loop.first %}active{% endif %}" aria-current="{% if loop.first %}true{% endif %}" aria-label="Slide {{ i + 1 }}"></button>
+            {% endfor %}
+        </div>
+
+        <div class="carousel-inner">
+            {% for image in property.image_paths.split(',') %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}" data-bs-interval="10000">
+                <img src="{{ url_for('static', filename=image.split('static/')[1]) }}" alt="Property Image" class="d-block w-100">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{ property.name }}</h5>
+                    <p>{{ property.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
     <div class="card mb-4">
         <div class="card-body">
             <h5>Description:</h5>
             <p>{{ property.description }}</p>
             <h5>Assigned User:</h5>
             <p>{{ property.owner.username }}</p>
-            <h5>Images:</h5>
-            <div>
-                {% for image in property.image_paths.split(',') %}
-                    <img src="{{ url_for('static', filename=image.split('static/')[1]) }}" alt="Property Image" width="100">
-                {% endfor %}
-            </div>
         </div>
     </div>
 </div>

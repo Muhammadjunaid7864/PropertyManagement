@@ -16,8 +16,14 @@ def allowed_file(filename):
 def properties():
     if request.method == 'POST':
         # Get form data
+        property_id = request.form.get('property_id')
         property_name = request.form.get('property_name')
         description = request.form.get('description')
+        location = request.form.get('location')
+        property_type = request.form.get('property_type')
+        status = request.form.get('status')
+        beds = request.form.get('beds')
+        baths = request.form.get('baths')
         user_id = request.form.get('user_id')  # Get the selected user's ID
 
         # Handle file uploads
@@ -33,9 +39,15 @@ def properties():
 
         # Save property to the database
         new_property = Property(
+            property_id = property_id,
             name=property_name,
             description=description,
             image_paths=",".join(image_paths),  # Join paths with a comma
+            location = location,
+            property_type= property_type,
+            status = status,
+            beds = beds,
+            baths = baths,
             user_id=user_id  # Assign the property to the selected user
         )
         db.session.add(new_property)

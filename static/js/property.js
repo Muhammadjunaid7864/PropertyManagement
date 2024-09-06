@@ -1,9 +1,34 @@
 $(document).ready(function() {
+    $('.select2').select2();
+
+    $('#property_type').select2({
+        tags: true,
+        tokenSeparators: [',']
+    });
+
+    $('#status').select2({
+        tags: true,
+        tokenSeparators: [',']
+    });
+
     var table = $('#propertyTable').DataTable({
+        scrollY: "400px",  
+        scrollX: true,     
+        scrollCollapse: true, 
+        autoWidth: false,
+        
         columnDefs: [{
             "defaultContent": "-",
             "targets": "_all"
-          }]
+        }],
+        columnDefs: [
+            { "width": "200px", "targets": 0 },
+            { "width": "200px", "targets": 1 },
+            { "width": "200px", "targets": 3 },
+            { "width": "400px", "targets": 4 },  // Fixed column for images
+            { "width": "200px", "targets": 6 },
+            { "width": "200px", "targets": 10 },  
+        ]
     });
 
     // Handle form submission
@@ -29,10 +54,17 @@ $(document).ready(function() {
                     });
 
                     table.row.add([
+                        response.property_id,
                         response.name,
                         response.description,
                         $('#user_id option:selected').text(),
                         imageTags,
+                        response.location,
+                        response.property_type,
+                        response.status,
+                        response.beds,
+                        response.baths,
+
                         '<button class="btn btn-primary view-property" data-property-id="' + response.id + '"><i class="fa fa-eye"></i></button>' +
                         '<button class="btn btn-warning edit-property" data-property-id="' + response.id + '"><i class="fa fa-edit"></i></button>' +
                         '<button class="btn btn-danger delete-property" data-property-id="' + response.id + '"><i class="fa fa-trash"></i></button>'

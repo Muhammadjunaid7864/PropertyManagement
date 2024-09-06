@@ -23,6 +23,10 @@
                 <form id="propertyForm" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="property_name">Property ID</label>
+                            <input type="text" class="form-control" id="property_id" name="property_id" required>
+                        </div>
+                        <div class="form-group">
                             <label for="property_name">Property Name</label>
                             <input type="text" class="form-control" id="property_name" name="property_name" required>
                         </div>
@@ -43,6 +47,43 @@
                             <label for="images">Upload Images</label>
                             <input type="file" class="form-control-file" id="images" name="images[]" multiple>
                         </div>
+                        <div class="form-group">
+                            <label for="location">Location </label>
+                                <input type="text" class="form-control" id="location" name="location" required>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="property_type">Property Type</label><br/>
+                            <select class="form-control select2" id="property_type" name="property_type" style="width: 100%;" required>
+                                <option value="">Select Property Type</option>
+                                <option value="Home">Home</option>
+                                <option value="Office">Office</option>
+                                {% for type in property_types %}
+                                    <option value="{{ type }}">{{ type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label><br/>
+                            <select class="form-control select2" id="status" name="status" style="width: 100%;" required>
+                                <option value="">Select Status</option>
+                                <option value="Sale">Sale</option>
+                                <option value="On-Rent">On-Rent</option>
+                                {% for status in statuses %}
+                                    <option value="{{ status }}">{{ status }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="beds">Beds </label>
+                                <input type="text" class="form-control" id="beds" name="beds" required>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="baths">Baths </label>
+                                <input type="text" class="form-control" id="baths" name="baths" required>
+                            </label>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -57,16 +98,23 @@
     <table id="propertyTable" class="table table-striped table-bordered mt-3">
         <thead>
             <tr>
+                <th>Property Id</th>
                 <th>Property Name</th>
                 <th>Description</th>
                 <th>Assigned User</th>
                 <th>Images</th>
+                <th>Location</th>
+                <th>Property Type</th>
+                <th>Status</th>
+                <th>Beds</th>
+                <th>Baths</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {% for property in properties %}
             <tr>
+                <td>{{property.property_id}}</td>
                 <td>{{ property.name }}</td>
                 <td>{{ property.description }}</td>
                 <td>{{ property.owner.username }}</td> <!-- Display the assigned user's name -->
@@ -75,6 +123,11 @@
                         <img src="{{ image }}" alt="Property Image" width="100">
                     {% endfor %}
                 </td>
+                <td>{{property.location}}</td>
+                <td>{{property.property_type}}</td>
+                <td>{{property.status}}</td>
+                <td>{{property.beds}}</td>
+                <td>{{property.baths}}</td>
                 <td>
                     <button type="button" class="btn btn-primary view-property" data-property-id="{{ property.id }}"><i class="fa fa-eye"></i></button>
                     <button type="button" class="btn btn-warning edit-property" data-property-id="{{ property.id }}"><i class="fa fa-edit"></i></button>
