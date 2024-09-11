@@ -9,12 +9,12 @@ pipeline{
         }
         stage('install requirements '){
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
         stage('Run Flask project'){
             steps{
-                sh 'flask run'
+                bat 'flask run'
             }
         }
     }
