@@ -24,8 +24,9 @@ $(document).ready(function() {
         columnDefs: [
             { "width": "200px", "targets": 0 },
             { "width": "200px", "targets": 1 },
+            {"targets": 2, "visible": false },
             { "width": "200px", "targets": 3 },
-            { "width": "400px", "targets": 4 },  // Fixed column for images
+            { "targets": 4, "visible": false  },
             { "width": "200px", "targets": 6 },
             { "width": "200px", "targets": 10 },  
         ]
@@ -150,5 +151,33 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+    // Handle edit button click
+$('#propertyTable').on('click', '.edit-property', function() {
+    var propertyId = $(this).data('property-id');
+    
+    // Get the row data
+    var row = table.row($(this).closest('tr')).data();
+    
+    // Populate the modal with property details
+    $('#property_id').val(row[0]);
+    $('#property_name').val(row[1]);
+    $('#description').val(row[2]);
+    $('#user_id').val(row[3]);
+    $('#location').val(row[5]);
+    $('#property_type').val(row[6]);
+    $('#status').val(row[7]);
+    $('#beds').val(row[8]);
+    $('#baths').val(row[9]);
+    
+    // Populate images
+    var imagesHtml = '';
+    $(row[4]).each(function(index, image) {
+        imagesHtml += '<img src="' + image + '" alt="Property Image" width="100">';
+    });
+    $('#property_images').html(imagesHtml);
+    
+    // Show the modal
+    $('#propertyModal').modal('show');
     });
 });

@@ -92,3 +92,29 @@ def delete_property():
         return jsonify({'status': 'success', 'message': 'Property deleted successfully!','redirect_url': url_for('app_bp.properties')}),200
     else:
         return jsonify({'status': 'error', 'message': 'Property not found.'}), 404
+    
+
+def get_property(property_id):
+    property = Property.query.get(property_id)
+
+    if property is None:
+        return jsonify({'status': 'error', 'message': 'Property not found'}), 404
+
+    # Split the image paths for returning them as an array
+    image_paths = property.image_paths.split(',')
+
+    # Prepare the data to send back to the client
+    property_data = {
+        'property_id': property.property_id,
+        'name': property.name,
+        'description': property.description,
+        'assigned_user': property.owner.id,  # Assuming 'owner' is a foreign key to the User model
+        'image_paths': image_paths,
+        'location': property.location,
+        'property_type': property.property_type,
+        'status': property.status,
+        'beds': property.beds,
+        'baths': property.baths,
+    }
+
+    return jsonify({'status': 'success', 'property': property_data})

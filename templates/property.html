@@ -138,5 +138,88 @@
         </tbody>
     </table>
 </div>
+<!-- Property Modal -->
+<div class="modal fade" id="propertyModal" tabindex="-1" role="dialog" aria-labelledby="propertyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="propertyModalLabel">Add Property</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="propertyForm" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <!-- Existing fields -->
+                    <div class="form-group">
+                        <label for="property_id">Property ID</label>
+                        <input type="text" class="form-control" id="property_id" name="property_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="property_name">Property Name</label>
+                        <input type="text" class="form-control" id="property_name" name="property_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="user_id">Assign to User</label>
+                        <select class="form-control" id="user_id" name="user_id" required>
+                            <option value="">Select User</option>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="images">Upload Images</label>
+                        <input type="file" class="form-control-file" id="images" name="images[]" multiple>
+                        <div id="property_images"></div> <!-- Container for displaying images -->
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location </label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="property_type">Property Type</label><br/>
+                        <select class="form-control select2" id="property_type" name="property_type" style="width: 100%;" required>
+                            <option value="">Select Property Type</option>
+                            <option value="Home">Home</option>
+                            <option value="Office">Office</option>
+                            {% for type in property_types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label><br/>
+                        <select class="form-control select2" id="status" name="status" style="width: 100%;" required>
+                            <option value="">Select Status</option>
+                            <option value="Sale">Sale</option>
+                            <option value="On-Rent">On-Rent</option>
+                            {% for status in statuses %}
+                                <option value="{{ status }}">{{ status }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="beds">Beds </label>
+                        <input type="text" class="form-control" id="beds" name="beds" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="baths">Baths </label>
+                        <input type="text" class="form-control" id="baths" name="baths" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Property</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="{{ url_for('static', filename='js/property.js') }}"></script>
 {% endblock %}
