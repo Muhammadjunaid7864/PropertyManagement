@@ -1,7 +1,7 @@
 pipline{
     agent any
 
-    stages{
+    stages {
         stage('Checkout'){
             steps {
                 git branch: 'main', credentialsId: 'github-credentials-id', url: 'https://github.com/Muhammadjunaid7864/hashicorp_kv_tf.git'
