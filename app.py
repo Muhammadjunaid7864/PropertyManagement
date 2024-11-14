@@ -5,7 +5,7 @@ from utilities.config import Config
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-
+password:"junaid@7896"
 app = Flask(__name__)
 app.config.from_object(Config)
 
